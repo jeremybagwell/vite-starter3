@@ -92,31 +92,65 @@ class MNavLogger {
 
   async __diagLog(level: string, location: any, correlationId: string, message: string) {
     const record = JSON.stringify({
-      loggerName: `MNav.${this.loggerName}`,
-      level,
-      filename: location.filename.slice(-30),
-      lineno: location.line_number,
-      message,
-      function_name: location.function_name,
-      cid: correlationId
-    });
-    const response = await fetch('http://10.54.46.135:8888', {
-      method: 'POST',
-      body: JSON.stringify([
-        { "foo": "bar" },
-        { "abc": "def" },
-        { "xyz": "123" }
-      ]),
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
+      "loggerName": `MNav.${this.loggerName}`,
+      "level": level,
+      "filename": location.filename.slice(-30),
+      "lineno": location.line_number,
+      "message": message,
+      "function_name": location.function_name,
+      "cid": correlationId
     });
 
-    if (!response.ok) {
-      throw new Error(`Error! status: ${response.status}`);
-    }
-    // console.log(record);
+    const response = await fetch('http://10.54.46.135:8888', {
+      method: 'POST',
+      // mode: "cors", // no-cors, *cors, same-origin
+      // cache: "no-store", // *default, no-cache, reload, force-cache, only-if-cached
+      // credentials: "same-origin", // include, *same-origin, omit
+      body: record,
+      headers: {
+        'Content-Type': 'application/json',
+        // Accept: 'application/json',
+      },
+    });
+    // Build the request
+  // const url = 'http://10.54.46.135:8888/appcomponent3';
+  // const headers = {
+  //   'Content-Type': 'application/json',
+  // };
+
+  // const record = JSON.stringify({
+  //   "loggerName": `MNav.${this.loggerName}`,
+  //   "level": level,
+  //   "filename": location.filename.slice(-30),
+  //   "lineno": location.line_number,
+  //   "message": message,
+  //   "function_name": location.function_name,
+  //   "cid": correlationId
+  // });
+
+
+
+  // Send the fetch request and log the response
+  // fetch(url, {
+  //   method: 'POST',
+  //   headers: headers,
+  //   body: record
+  // })
+  // .then((response) => {
+  //   console.log(response)
+  //   if (response.status === 200) {
+  //     // return response.json();
+  //   } else {
+  //     throw new Error("Something went wrong on API server!");
+  //   }
+  // })
+  // .then((response) => {
+  //   console.debug(response);
+  //   // …
+  // })
+  // .catch((error) => {
+  //   console.error(error);
+  // });
 
   }
 

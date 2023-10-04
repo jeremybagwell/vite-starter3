@@ -6,7 +6,7 @@ import './App.css'
 import { MNavLogger } from './MNavLog';
 
 // Create a new instance of MNavLogger
-let logger = new MNavLogger("AppComponent", null, 'debug');
+let logger = new MNavLogger("AppComponent", null, 'info');
 
 // export default App
 function App() {
@@ -16,8 +16,8 @@ function App() {
   const toggleButtonColor = () => {
     // Toggle the button color
     setButtonColor(buttonColor === 'red' ? 'green' : 'red');
-    logger.diagDebug("12345", "This is a debug message");
-
+    logger.diagInfo("12345", "This is a debug message");
+    setCount((count) => count + 1);
   };
 
   return (
