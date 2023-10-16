@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// import * as winston from 'winston';
+// import {logger} from 'winston';
 // import { Syslog } from 'winston-syslog';
 // import { createLogger, format } from 'winston';
 // import fetch from 'node-fetch';
@@ -101,7 +101,8 @@ class MNavLogger {
       "cid": correlationId
     });
 
-    const response = await fetch('http://10.54.46.135:8888', {
+    // const response = await 
+    fetch('http://10.54.46.58:8888', {
       method: 'POST',
       // mode: "cors", // no-cors, *cors, same-origin
       // cache: "no-store", // *default, no-cache, reload, force-cache, only-if-cached
@@ -111,46 +112,14 @@ class MNavLogger {
         'Content-Type': 'application/json',
         // Accept: 'application/json',
       },
-    });
-    // Build the request
-  // const url = 'http://10.54.46.135:8888/appcomponent3';
-  // const headers = {
-  //   'Content-Type': 'application/json',
-  // };
-
-  // const record = JSON.stringify({
-  //   "loggerName": `MNav.${this.loggerName}`,
-  //   "level": level,
-  //   "filename": location.filename.slice(-30),
-  //   "lineno": location.line_number,
-  //   "message": message,
-  //   "function_name": location.function_name,
-  //   "cid": correlationId
-  // });
-
-
-
-  // Send the fetch request and log the response
-  // fetch(url, {
-  //   method: 'POST',
-  //   headers: headers,
-  //   body: record
-  // })
-  // .then((response) => {
-  //   console.log(response)
-  //   if (response.status === 200) {
-  //     // return response.json();
-  //   } else {
-  //     throw new Error("Something went wrong on API server!");
-  //   }
-  // })
-  // .then((response) => {
-  //   console.debug(response);
-  //   // …
-  // })
-  // .catch((error) => {
-  //   console.error(error);
-  // });
+    })
+      .then((response) => {
+        console.debug(response);
+        // …
+      })
+      .catch((error) => {
+        console.error(error);
+      });
 
   }
 
