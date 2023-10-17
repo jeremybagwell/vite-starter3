@@ -12,7 +12,9 @@
   "dependencies": {
     "fluent-logger": "^3.4.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "winston": "^3.11.0",
+    "winston-transport-browserconsole": "^1.0.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

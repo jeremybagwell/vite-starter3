@@ -1,12 +1,32 @@
 #!/usr/bin/env node
 
-// import {logger} from 'winston';
+// import * as winston from 'winston';
+// import BrowserConsole from 'winston-transport-browserconsole';
 // import { Syslog } from 'winston-syslog';
 // import { createLogger, format } from 'winston';
 // import fetch from 'node-fetch';
 
 // Directory used to store Diagnostic and Global Files
 // const log_dir_global = process.env.LOG_DIR || "../log"
+
+// const level = "debug";
+// winston.configure({
+//     transports: [
+//         new BrowserConsole(
+//             {
+//                 format: winston.format.simple(),
+//                 level,
+//             },
+//         ),
+//         // Uncomment to compare with default Console transport
+//         // new winston.transports.Console({
+//         //     format: winston.format.simple(),
+//         //     level,
+//         // }),
+//     ],
+// });
+ 
+// winston.debug("DEBUG ", {a: 1, b: "two"});
 
 enum SecType {
   ADMN = "ADMN",
@@ -136,6 +156,7 @@ class MNavLogger {
       sts: status
     };
     console.log(record);
+    // this.component_logger.info("hello");
 
   }
 
@@ -168,7 +189,11 @@ class MNavLogger {
   }
 
   __addComponentLogger() {
-
+    // this.component_logger = winston.createLogger({
+    //   transports: [
+    //     new BrowserConsole()
+    //   ]
+    // })
 
   }
 
