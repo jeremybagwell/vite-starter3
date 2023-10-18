@@ -16,7 +16,8 @@ function App() {
   const toggleButtonColor = () => {
     // Toggle the button color
     setButtonColor(buttonColor === 'red' ? 'green' : 'red');
-    logger.diagInfo("12345", "This is a debug message");
+    logger.diagInfo("12345", "This a debug message");
+    logger.diagInfo("hello world" + count);
     setCount((count) => count + 1);
   };
 

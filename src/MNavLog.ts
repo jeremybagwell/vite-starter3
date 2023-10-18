@@ -47,8 +47,6 @@ enum SecStatus {
   FAIL = "FAIL",
   DEFR = "DEFR"
 }
-
-
   
 class MNavLogger {
   loggerName: string;
@@ -59,45 +57,51 @@ class MNavLogger {
   constructor(loggerName: string, file_location: string | null = null, level: string = 'info') {
     this.loggerName = loggerName;
     this.component_filepath = file_location;
-    this.component_level = this.__string_to_level(level);
+    this.component_level = this.string_to_level(level);
 
-    this.__addComponentLogger();
+    this.addComponentLogger();
   }
 
   diagDebug(correlationId: any, message: string) {
-    this.__diagLog('debug', this.__getLocInfo(), correlationId, message);
+    this.diagLog('debug', this.getLocInfo(), correlationId, message);
   }
 
-  diagInfo(correlationId: any, message: string) {
-    this.__diagLog('info', this.__getLocInfo(), correlationId, message);
+  diagInfo(correlationId: any, message: string): void;
+  diagInfo(message: string): void;
+  diagInfo(correlationIdOrMessage: any, message?: string): void {
+    if (message) {
+      this.diagLog('info', this.getLocInfo(), correlationIdOrMessage, message);
+    } else {
+      this.diagLog('info', this.getLocInfo(), "1234", correlationIdOrMessage);
+    }
   }
 
   diagWarn(correlationId: any, message: string) {
-    this.__diagLog('warning', this.__getLocInfo(), correlationId, message);
+    this.diagLog('warning', this.getLocInfo(), correlationId, message);
   }
 
   diagError(correlationId: any, message: string) {
-    this.__diagLog('error', this.__getLocInfo(), correlationId, message);
+    this.diagLog('error', this.getLocInfo(), correlationId, message);
   }
 
   diagCrit(correlationId: any, message: string) {
-    this.__diagLog('crit', this.__getLocInfo(), correlationId, message);
+    this.diagLog('crit', this.getLocInfo(), correlationId, message);
   }
 
   secInfo(correlationId: any, type: SecType, status: SecStatus, message: string) {
-    this.__secLog('info', this.__getLocInfo(), correlationId, type, status, message);
+    this.secLog('info', this.getLocInfo(), correlationId, type, status, message);
   }
 
   secWarn(correlationId: any, type: SecType, status: SecStatus, message: string) {
-    this.__secLog('warning', this.__getLocInfo(), correlationId, type, status, message);
+    this.secLog('warning', this.getLocInfo(), correlationId, type, status, message);
   }
 
   secError(correlationId: any, type: SecType, status: SecStatus, message: string) {
-    this.__secLog('error', this.__getLocInfo(), correlationId, type, status, message);
+    this.secLog('error', this.getLocInfo(), correlationId, type, status, message);
   }
 
   secCrit(correlationId: any, type: SecType, status: SecStatus, message: string) {
-    this.__secLog('crit', this.__getLocInfo(), correlationId, type, status, message);
+    this.secLog('crit', this.getLocInfo(), correlationId, type, status, message);
   }
 
   isEnabledInfo() {
@@ -110,7 +114,7 @@ class MNavLogger {
     // return this.security_logger.isLevelEnabled('debug');
   }
 
-  async __diagLog(level: string, location: any, correlationId: string, message: string) {
+  private async diagLog(level: string, location: any, correlationId: string, message: string) {
     const record = JSON.stringify({
       "loggerName": `MNav.${this.loggerName}`,
       "level": level,
@@ -122,7 +126,7 @@ class MNavLogger {
     });
 
     // const response = await 
-    fetch('http://10.54.46.58:8888', {
+    fetch('http://localhost:8888', {
       method: 'POST',
       // mode: "cors", // no-cors, *cors, same-origin
       // cache: "no-store", // *default, no-cache, reload, force-cache, only-if-cached
@@ -143,7 +147,7 @@ class MNavLogger {
 
   }
 
-  __secLog(level: string, location: any, correlationId: string, type: SecType, status: SecStatus, message: string) {
+  private secLog(level: string, location: any, correlationId: string, type: SecType, status: SecStatus, message: string) {
     const record = {
       loggerName: `MNav.${this.loggerName}`,
       level,
@@ -160,7 +164,7 @@ class MNavLogger {
 
   }
 
-  __getLocInfo() {
+  private getLocInfo() {
     try {
       const stackFrame = new Error().stack?.split('\n')[3];
       const regex = /at (.+):(\d+):(\d+)/;
@@ -188,7 +192,7 @@ class MNavLogger {
     };
   }
 
-  __addComponentLogger() {
+  private addComponentLogger() {
     // this.component_logger = winston.createLogger({
     //   transports: [
     //     new BrowserConsole()
@@ -197,7 +201,7 @@ class MNavLogger {
 
   }
 
-  __string_to_level(level_string: string) {
+  private string_to_level(level_string: string) {
     const level_mapping: { [key: string]: string } = {
       info: 'info',
       warn: 'warning',
