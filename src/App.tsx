@@ -1,14 +1,10 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
-import { MNavLogger } from './MNavLog';
+import { MNavLogger, SecStatus, SecType } from '@juno/mnavlogging';
 
-// Create a new instance of MNavLogger
-let logger = new MNavLogger("AppComponent", null, 'info');
+let logger = new MNavLogger("typescriptComponent");
 
-// export default App
 function App() {
   const [count, setCount] = useState(0);
   const [buttonColor, setButtonColor] = useState('red');
@@ -16,22 +12,31 @@ function App() {
   const toggleButtonColor = () => {
     // Toggle the button color
     setButtonColor(buttonColor === 'red' ? 'green' : 'red');
-    logger.diagInfo("12345", "This a debug message");
-    logger.diagInfo("hello world" + count);
     setCount((count) => count + 1);
+
+    logger.setCorrelationId("CLIENT45354")
+
+    logger.diagTrace("12345", "Testing diagTrace() and count is " + count );
+    logger.diagTrace("Testing diagTrace() and count is " + count );
+    logger.diagDebug("12345", "Testing diagDebug() and count is " + count );
+    logger.diagDebug("Testing diagDebug() and count is " + count );
+    logger.diagInfo("12345", "Testing diagInfo() and count is " + count );
+    logger.diagInfo("Testing diagInfo() and count is " + count );
+    logger.diagWarn("12345", "Testing diagWarn() and count is " + count );
+    logger.diagWarn("Testing diagWarn() and count is " + count );
+    logger.diagError("12345", "Testing diagError() and count is " + count );
+    logger.diagError("Testing diagError() and count is " + count );
+    logger.secInfo("12345", SecType.ADMN, SecStatus.PASS, "Testing secInfo() and count is " + count );
+    logger.secInfo(SecType.ADMN, SecStatus.PASS, "Testing secInfo() and count is " + count );
+    logger.secWarn("12345", SecType.ADMN, SecStatus.PASS, "Testing secWarn() and count is " + count );
+    logger.secWarn(SecType.ADMN, SecStatus.PASS, "Testing secWarn() and count is " + count );
+    logger.secError("12345", SecType.ADMN, SecStatus.PASS, "Testing secError() and count is " + count );
+    logger.secError(SecType.ADMN, SecStatus.PASS, "Testing secError() and count is " + count );
   };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+      <h1>Client-side Test Page</h1> 
       <div className="card">
         <button
           onClick={toggleButtonColor}
@@ -39,13 +44,7 @@ function App() {
         >
           count is {count}
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 }
